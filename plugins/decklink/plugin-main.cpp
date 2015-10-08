@@ -42,6 +42,7 @@ static void decklink_update(void *data, obs_data_t *settings)
 	DeckLink *decklink = (DeckLink *)data;
 	const char *hash = obs_data_get_string(settings, "device_hash");
 	long long id = obs_data_get_int(settings, "mode_id");
+	BMDPixelFormat format = obs_data_get_int(settings, "pixel_format");
 
 	decklink_enable_buffering(decklink,
 			obs_data_get_bool(settings, "buffering"));
@@ -49,6 +50,7 @@ static void decklink_update(void *data, obs_data_t *settings)
 	ComPtr<DeckLinkDevice> device;
 	device.Set(deviceEnum->FindByHash(hash));
 
+	decklink->SetPixelFormat(format);
 	decklink->Activate(device, id);
 }
 
