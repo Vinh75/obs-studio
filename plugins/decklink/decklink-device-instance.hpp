@@ -9,7 +9,6 @@ protected:
 	DeckLink                *decklink = nullptr;
 	DeckLinkDevice          *device = nullptr;
 	DeckLinkDeviceMode      *mode = nullptr;
-	BMDPixelFormat          pixelFormat = bmdFormat8BitYUV;
 	ComPtr<IDeckLinkInput>  input;
 	volatile long           refCount = 1;
 

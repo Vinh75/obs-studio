@@ -55,6 +55,7 @@ static void decklink_update(void *data, obs_data_t *settings)
 static void decklink_get_defaults(obs_data_t *settings)
 {
 	obs_data_set_default_bool(settings, "buffering", true);
+	obs_data_set_default_int(settings, "pixel_format", bmdFormat8BitYUV);
 }
 
 static const char *decklink_get_name(void*)
@@ -138,6 +139,13 @@ static obs_properties_t *decklink_get_properties(void *data)
 	list = obs_properties_add_list(props, "mode_id",
 			obs_module_text("Mode"), OBS_COMBO_TYPE_LIST,
 			OBS_COMBO_FORMAT_INT);
+
+	list = obs_properties_add_list(props, "pixel_format",
+			obs_module_text("PixelFormat"), OBS_COMBO_TYPE_LIST,
+			OBS_COMBO_FORMAT_INT);
+
+	obs_property_list_add_int(list, "8-bit YUV", bmdFormat8BitYUV);
+	obs_property_list_add_int(list, "8-bit BGRA", bmdFormat8BitBGRA);
 
 	obs_properties_add_bool(props, "buffering",
 			obs_module_text("Buffering"));
