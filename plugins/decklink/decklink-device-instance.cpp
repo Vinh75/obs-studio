@@ -24,13 +24,6 @@ DeckLinkDeviceInstance::DeckLinkDeviceInstance(DeckLink *decklink_,
 		DeckLinkDevice *device_) :
 	currentFrame(), currentPacket(), decklink(decklink_), device(device_)
 {
-	format = decklink->GetPixelFormat();
-
-	currentFrame.format = ConvertPixelFormat(format);
-
-	blog(LOG_INFO, "currentFrame.format: %d",
-			(int)currentFrame.format);
-
 	currentPacket.samples_per_sec = 48000;
 	currentPacket.speakers        = SPEAKERS_STEREO;
 	currentPacket.format          = AUDIO_FORMAT_16BIT;
@@ -97,12 +90,19 @@ bool DeckLinkDeviceInstance::StartCapture(DeckLinkDeviceMode *mode_)
 	if (!device->GetInput(&input))
 		return false;
 
+	format = decklink->GetPixelFormat();
+
+	currentFrame.format = ConvertPixelFormat(format);
+
+	blog(LOG_INFO, "currentFrame.format: %d",
+			(int)currentFrame.format);
+
 	input->SetCallback(this);
 
 	const BMDDisplayMode displayMode = mode_->GetDisplayMode();
 
 	const HRESULT videoResult = input->EnableVideoInput(displayMode,
-			decklink->GetPixelFormat(), bmdVideoInputFlagDefault);
+			format, bmdVideoInputFlagDefault);
 
 	if (videoResult != S_OK) {
 		LOG(LOG_ERROR, "Failed to enable video input");
