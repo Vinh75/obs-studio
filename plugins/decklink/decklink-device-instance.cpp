@@ -28,6 +28,9 @@ DeckLinkDeviceInstance::DeckLinkDeviceInstance(DeckLink *decklink_,
 
 	currentFrame.format = ConvertPixelFormat(format);
 
+	blog(LOG_DEBUG, "currentFrame.format: %d",
+			(int)currentFrame.format);
+
 	currentPacket.samples_per_sec = 48000;
 	currentPacket.speakers        = SPEAKERS_STEREO;
 	currentPacket.format          = AUDIO_FORMAT_16BIT;
