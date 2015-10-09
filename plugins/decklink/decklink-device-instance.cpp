@@ -28,7 +28,7 @@ DeckLinkDeviceInstance::DeckLinkDeviceInstance(DeckLink *decklink_,
 
 	currentFrame.format = ConvertPixelFormat(format);
 
-	blog(LOG_DEBUG, "currentFrame.format: %d",
+	blog(LOG_INFO, "currentFrame.format: %d",
 			(int)currentFrame.format);
 
 	currentPacket.samples_per_sec = 48000;
